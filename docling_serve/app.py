@@ -82,10 +82,11 @@ from docling_serve.response_preparation import prepare_response
 from docling_serve.settings import docling_serve_settings
 from docling_serve.storage import get_scratch
 from docling_serve.websocket_notifier import WebsocketNotifier
-from docling_serve. hierarchy_patch import apply_hierarchy_patch, patch_chunking_module
+from docling_serve.hierarchy_patch import apply_hierarchy_patch, patch_chunking_module
 
 apply_hierarchy_patch()
 patch_chunking_module()
+
 
 # Set up custom logging as we'll be intermixes with FastAPI/Uvicorn's logging
 class ColoredLogFormatter(logging.Formatter):
@@ -122,7 +123,6 @@ _log = logging.getLogger(__name__)
 # Context manager to initialize and clean up the lifespan of the FastAPI app
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-
     apply_hierarchy_patch()
     scratch_dir = get_scratch()
 

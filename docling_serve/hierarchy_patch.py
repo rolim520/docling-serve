@@ -1,10 +1,11 @@
 """
-Patch para aplicar hierarquia de headers automaticamente em TODOS os casos. 
+Patch para aplicar hierarquia de headers automaticamente em TODOS os casos.
 """
+
 import logging
 from functools import wraps
 
-_log = logging. getLogger(__name__)
+_log = logging.getLogger(__name__)
 
 
 def apply_hierarchy_patch():
@@ -13,12 +14,14 @@ def apply_hierarchy_patch():
     o pós-processamento de hierarquia (H1, H2, H3.. .) antes de salvar os arquivos.
     """
     try:
-        from hierarchical. postprocessor import ResultPostprocessor
-        from docling. datamodel. document import ConversionStatus
-        import docling_jobkit. convert.results as results_module
+        from hierarchical.postprocessor import ResultPostprocessor
+        from docling.datamodel.document import ConversionStatus
+        import docling_jobkit.convert.results as results_module
     except ImportError as e:
         _log.warning(f"Could not import required modules for hierarchy patch: {e}")
-        _log.warning("Header hierarchy will NOT be applied.  Install docling-hierarchical-pdf.")
+        _log.warning(
+            "Header hierarchy will NOT be applied.  Install docling-hierarchical-pdf."
+        )
         return
 
     # Guarda a referência original
@@ -35,7 +38,7 @@ def apply_hierarchy_patch():
 
         # 2. Itera sobre os resultados e aplica a correção hierárquica
         for conv_res in results_list:
-            if conv_res.status == ConversionStatus. SUCCESS:
+            if conv_res.status == ConversionStatus.SUCCESS:
                 try:
                     # O postprocessor modifica o conv_res.document in-place (na memória)
                     processor = ResultPostprocessor(conv_res)
@@ -44,11 +47,13 @@ def apply_hierarchy_patch():
                 except Exception as e:
                     _log.warning(
                         f"Error applying hierarchical post-processing to "
-                        f"{conv_res.input. file. name}: {e}"
+                        f"{conv_res.input.file.name}: {e}"
                     )
 
         if processed_count > 0:
-            _log.info(f"Hierarchical structure applied to {processed_count} document(s).")
+            _log.info(
+                f"Hierarchical structure applied to {processed_count} document(s)."
+            )
 
         # 3. Chama a função original do jobkit passando a nossa lista já modificada
         # A função original aceita Iterable, então uma list funciona perfeitamente.
@@ -56,7 +61,7 @@ def apply_hierarchy_patch():
 
     # Aplica o Monkey Patch
     results_module.process_export_results = patched_process_export_results
-    _log. info("Hierarchy patch applied: docling-serve will now fix header levels.")
+    _log.info("Hierarchy patch applied: docling-serve will now fix header levels.")
 
 
 def patch_chunking_module():
@@ -67,7 +72,7 @@ def patch_chunking_module():
         from hierarchical.postprocessor import ResultPostprocessor
         from docling.datamodel.document import ConversionStatus
         import docling_jobkit.convert.chunking as chunking_module
-    except ImportError: 
+    except ImportError:
         return
 
     original_process_chunk_results = chunking_module.process_chunk_results
@@ -77,7 +82,7 @@ def patch_chunking_module():
         results_list = list(conv_results)
 
         for conv_res in results_list:
-            if conv_res. status == ConversionStatus.SUCCESS: 
+            if conv_res.status == ConversionStatus.SUCCESS:
                 try:
                     ResultPostprocessor(conv_res).process()
                 except Exception as e:
