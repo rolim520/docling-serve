@@ -49,5 +49,4 @@ jobs:
       publish: false
       build_args: ${{ matrix.spec.build_args }}
       ghcr_image_name: ${{ matrix.spec.name }}
-      quay_image_name: ""
       platforms: ${{ matrix.spec.platforms }}
