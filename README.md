@@ -28,7 +28,7 @@ pip install "docling-serve[ui]"
 docling-serve run --enable-ui
 
 # Using container images, e.g. with Podman
-podman run -p 5001:5001 -e DOCLING_SERVE_ENABLE_UI=1 quay.io/docling-project/docling-serve
+podman run -p 5001:5001 -e DOCLING_SERVE_ENABLE_UI=1 ghcr.io/rolim520/docling-serve
 ```
 
 The server is available at
@@ -55,14 +55,16 @@ curl -X 'POST' \
 
 The following container images are available for running **Docling Serve** with different hardware and PyTorch configurations:
 
-#### 📦 Distributed Images
+#### 📦 Distributed Images (Custom Fork)
 
-| Image | Description | Architectures | Size |
-|-------|-------------|----------------|------|
-| [`ghcr.io/docling-project/docling-serve`](https://github.com/docling-project/docling-serve/pkgs/container/docling-serve) <br> [`quay.io/docling-project/docling-serve`](https://quay.io/repository/docling-project/docling-serve) | Base image with all packages installed from the official PyPI index. | `linux/amd64`, `linux/arm64` | 4.4 GB (arm64) <br> 8.7 GB (amd64) |
-| [`ghcr.io/docling-project/docling-serve-cpu`](https://github.com/docling-project/docling-serve/pkgs/container/docling-serve-cpu) <br> [`quay.io/docling-project/docling-serve-cpu`](https://quay.io/repository/docling-project/docling-serve-cpu) | CPU-only variant, using `torch` from the PyTorch CPU index. | `linux/amd64`, `linux/arm64` | 4.4 GB |
-| [`ghcr.io/docling-project/docling-serve-cu126`](https://github.com/docling-project/docling-serve/pkgs/container/docling-serve-cu126) <br> [`quay.io/docling-project/docling-serve-cu126`](https://quay.io/repository/docling-project/docling-serve-cu126) | CUDA 12.6 build with `torch` from the cu126 index. | `linux/amd64` | 10.0 GB |
-| [`ghcr.io/docling-project/docling-serve-cu128`](https://github.com/docling-project/docling-serve/pkgs/container/docling-serve-cu128) <br> [`quay.io/docling-project/docling-serve-cu128`](https://quay.io/repository/docling-project/docling-serve-cu128) | CUDA 12.8 build with `torch` from the cu128 index. | `linux/amd64` | 11.4 GB |
+> **Note:** These images are custom builds including the **Hierarchical Header Patch** (H1/H2/H3 support) enabled by default.
+
+| Image | Description | Architectures |
+|-------|-------------|----------------|
+| `ghcr.io/rolim520/docling-serve` | Base image with hierarchical patch + all packages installed. | `linux/amd64`, `linux/arm64` |
+| `ghcr.io/rolim520/docling-serve-cpu` | CPU-only variant, using `torch` from the PyTorch CPU index. | `linux/amd64`, `linux/arm64` |
+| `ghcr.io/rolim520/docling-serve-cu126` | CUDA 12.6 build with `torch` from the cu126 index. | `linux/amd64` |
+| `ghcr.io/rolim520/docling-serve-cu128` | CUDA 12.8 build with `torch` from the cu128 index. | `linux/amd64` |
 
 #### 🚫 Not Distributed
 
