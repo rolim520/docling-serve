@@ -77,12 +77,12 @@ from docling_serve.datamodel.responses import (
     WebsocketMessage,
 )
 from docling_serve.helper_functions import DOCLING_VERSIONS, FormDepends
+from docling_serve.hierarchy_patch import apply_hierarchy_patch, patch_chunking_module
 from docling_serve.orchestrator_factory import get_async_orchestrator
 from docling_serve.response_preparation import prepare_response
 from docling_serve.settings import docling_serve_settings
 from docling_serve.storage import get_scratch
 from docling_serve.websocket_notifier import WebsocketNotifier
-from docling_serve.hierarchy_patch import apply_hierarchy_patch, patch_chunking_module
 
 apply_hierarchy_patch()
 patch_chunking_module()

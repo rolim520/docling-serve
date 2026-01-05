@@ -15,8 +15,9 @@ def apply_hierarchy_patch():
     """
     try:
         from hierarchical.postprocessor import ResultPostprocessor
-        from docling.datamodel.document import ConversionStatus
+
         import docling_jobkit.convert.results as results_module
+        from docling.datamodel.document import ConversionStatus
     except ImportError as e:
         _log.warning(f"Could not import required modules for hierarchy patch: {e}")
         _log.warning(
@@ -70,8 +71,9 @@ def patch_chunking_module():
     """
     try:
         from hierarchical.postprocessor import ResultPostprocessor
-        from docling.datamodel.document import ConversionStatus
+
         import docling_jobkit.convert.chunking as chunking_module
+        from docling.datamodel.document import ConversionStatus
     except ImportError:
         return
 
